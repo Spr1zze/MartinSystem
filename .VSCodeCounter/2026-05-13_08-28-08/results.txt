@@ -1,0 +1,156 @@
+Date : 2026-05-13 08:28:08
+Directory : c:\Users\Siedl\Programming\VS-Code\MartinInventory
+Total : 98 files,  15650 codes, 131 comments, 978 blanks, all 16759 lines
+
+Languages
++--------------------+------------+------------+------------+------------+------------+
+| language           | files      | code       | comment    | blank      | total      |
++--------------------+------------+------------+------------+------------+------------+
+| JSON               |         24 |      9,848 |          4 |         22 |      9,874 |
+| TypeScript JSX     |         20 |      2,830 |         12 |        295 |      3,137 |
+| C#                 |         35 |      2,506 |         60 |        565 |      3,131 |
+| TypeScript         |         11 |        220 |          8 |         41 |        269 |
+| JavaScript         |          3 |        112 |         47 |         32 |        191 |
+| Markdown           |          1 |         60 |          0 |         14 |         74 |
+| PostCSS            |          1 |         38 |          0 |          3 |         41 |
+| XML                |          1 |         16 |          0 |          4 |         20 |
+| HTML               |          1 |         13 |          0 |          1 |         14 |
+| JSON with Comments |          1 |          7 |          0 |          1 |          8 |
++--------------------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                                  | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                                     |         98 |     15,650 |        131 |        978 |     16,759 |
+| . (Files)                                                                                                                             |          2 |      3,511 |          0 |          4 |      3,515 |
+| backend                                                                                                                               |         54 |      5,352 |         60 |        579 |      5,991 |
+| backend (Files)                                                                                                                       |          4 |         75 |          7 |         20 |        102 |
+| backend\Migrations                                                                                                                    |          7 |      1,424 |         16 |        353 |      1,793 |
+| backend\Properties                                                                                                                    |          1 |         23 |          0 |          1 |         24 |
+| backend\build-verify                                                                                                                  |          5 |        929 |          0 |          2 |        931 |
+| backend\build-verify-signature                                                                                                        |         10 |      1,858 |          0 |          4 |      1,862 |
+| backend\build-verify-signature (Files)                                                                                                |          5 |        929 |          0 |          2 |        931 |
+| backend\build-verify-signature\build-verify                                                                                           |          5 |        929 |          0 |          2 |        931 |
+| backend\src                                                                                                                           |         27 |      1,043 |         37 |        199 |      1,279 |
+| backend\src\Controllers                                                                                                               |          5 |        311 |          8 |         62 |        381 |
+| backend\src\Data                                                                                                                      |          1 |         38 |         14 |         10 |         62 |
+| backend\src\Dtos                                                                                                                      |          8 |         93 |          0 |          8 |        101 |
+| backend\src\Models                                                                                                                    |          7 |        158 |          1 |         23 |        182 |
+| backend\src\Services                                                                                                                  |          6 |        443 |         14 |         96 |        553 |
+| frontend                                                                                                                              |         41 |      6,703 |         55 |        366 |      7,124 |
+| frontend (Files)                                                                                                                      |         10 |      3,622 |         35 |         30 |      3,687 |
+| frontend\src                                                                                                                          |         31 |      3,081 |         20 |        336 |      3,437 |
+| frontend\src (Files)                                                                                                                  |          4 |        234 |          7 |         32 |        273 |
+| frontend\src\components                                                                                                               |          9 |        294 |          7 |         41 |        342 |
+| frontend\src\context                                                                                                                  |          2 |         77 |          4 |         18 |         99 |
+| frontend\src\hooks                                                                                                                    |          3 |         27 |          0 |          6 |         33 |
+| frontend\src\pages                                                                                                                    |          7 |      2,390 |          1 |        224 |      2,615 |
+| frontend\src\services                                                                                                                 |          6 |         59 |          1 |         15 |         75 |
+| public                                                                                                                                |          1 |         84 |         16 |         29 |        129 |
++---------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| filename                                                                                                                              | language           | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\Migrations\20260507093007_InitialElectron.Designer.cs                      | C#                 |        278 |          2 |         78 |        358 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\Migrations\20260507093007_InitialElectron.cs                               | C#                 |        238 |          3 |         27 |        268 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\Migrations\20260512090038_UpdateBarcodeType.Designer.cs                    | C#                 |        279 |          2 |         78 |        359 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\Migrations\20260512090038_UpdateBarcodeType.cs                             | C#                 |         64 |          3 |         10 |         77 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\Migrations\20260512101610_ChangingSeedingData.Designer.cs                  | C#                 |        268 |          2 |         77 |        347 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\Migrations\20260512101610_ChangingSeedingData.cs                           | C#                 |         31 |          3 |          6 |         40 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\Migrations\AppDbContextModelSnapshot.cs                                    | C#                 |        266 |          1 |         77 |        344 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\Program.cs                                                                 | C#                 |         39 |          7 |         13 |         59 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\Properties\launchSettings.json                                             | JSON               |         23 |          0 |          1 |         24 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\appsettings.Development.json                                               | JSON               |          8 |          0 |          1 |          9 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\appsettings.json                                                           | JSON               |         12 |          0 |          2 |         14 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\backend.csproj                                                             | XML                |         16 |          0 |          4 |         20 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\build-verify-signature\appsettings.Development.json                        | JSON               |          8 |          0 |          1 |          9 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\build-verify-signature\appsettings.json                                    | JSON               |         12 |          0 |          1 |         13 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\build-verify-signature\backend.deps.json                                   | JSON               |        888 |          0 |          0 |        888 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\build-verify-signature\backend.runtimeconfig.json                          | JSON               |         20 |          0 |          0 |         20 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\build-verify-signature\backend.staticwebassets.endpoints.json              | JSON               |          1 |          0 |          0 |          1 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\build-verify-signature\build-verify\appsettings.Development.json           | JSON               |          8 |          0 |          1 |          9 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\build-verify-signature\build-verify\appsettings.json                       | JSON               |         12 |          0 |          1 |         13 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\build-verify-signature\build-verify\backend.deps.json                      | JSON               |        888 |          0 |          0 |        888 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\build-verify-signature\build-verify\backend.runtimeconfig.json             | JSON               |         20 |          0 |          0 |         20 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\build-verify-signature\build-verify\backend.staticwebassets.endpoints.json | JSON               |          1 |          0 |          0 |          1 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\build-verify\appsettings.Development.json                                  | JSON               |          8 |          0 |          1 |          9 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\build-verify\appsettings.json                                              | JSON               |         12 |          0 |          1 |         13 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\build-verify\backend.deps.json                                             | JSON               |        888 |          0 |          0 |        888 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\build-verify\backend.runtimeconfig.json                                    | JSON               |         20 |          0 |          0 |         20 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\build-verify\backend.staticwebassets.endpoints.json                        | JSON               |          1 |          0 |          0 |          1 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\src\Controllers\AdminController.cs                                         | C#                 |         90 |          3 |         19 |        112 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\src\Controllers\InventoryItemController.cs                                 | C#                 |        104 |          0 |         23 |        127 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\src\Controllers\InventoryLogController.cs                                  | C#                 |         50 |          1 |          9 |         60 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\src\Controllers\SupplyListController.cs                                    | C#                 |         27 |          0 |          4 |         31 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\src\Controllers\WorkLogController.cs                                       | C#                 |         40 |          4 |          7 |         51 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\src\Data\AppDbContext.cs                                                   | C#                 |         38 |         14 |         10 |         62 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\src\Dtos\AdminInventoryLogDto.cs                                           | C#                 |         16 |          0 |          1 |         17 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\src\Dtos\CreateCheckoutRequest.cs                                          | C#                 |         10 |          0 |          2 |         12 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\src\Dtos\CreateNewItemDto.cs                                               | C#                 |         16 |          0 |          0 |         16 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\src\Dtos\CreateStudentRequestDto.cs                                        | C#                 |          9 |          0 |          1 |         10 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\src\Dtos\CreateWorkLogRequest.cs                                           | C#                 |          9 |          0 |          0 |          9 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\src\Dtos\EditItemDto.cs                                                    | C#                 |         12 |          0 |          0 |         12 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\src\Dtos\EditUserRequestDto.cs                                             | C#                 |         10 |          0 |          0 |         10 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\src\Dtos\SearchItemDto.cs                                                  | C#                 |         11 |          0 |          4 |         15 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\src\Models\Group.cs                                                        | C#                 |          8 |          0 |          0 |          8 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\src\Models\InventoryItem.cs                                                | C#                 |         45 |          1 |          7 |         53 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\src\Models\InventoryLog.cs                                                 | C#                 |         34 |          0 |          8 |         42 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\src\Models\ItemType.cs                                                     | C#                 |          8 |          0 |          0 |          8 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\src\Models\Unit.cs                                                         | C#                 |          8 |          0 |          0 |          8 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\src\Models\User.cs                                                         | C#                 |         29 |          0 |          5 |         34 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\src\Models\WorkLog.cs                                                      | C#                 |         26 |          0 |          3 |         29 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\src\Services\AdminService.cs                                               | C#                 |         28 |          0 |          5 |         33 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\src\Services\InventoryItemService.cs                                       | C#                 |        141 |          2 |         32 |        175 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\src\Services\InventoryLogService.cs                                        | C#                 |        123 |          5 |         24 |        152 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\src\Services\SupplyListService.cs                                          | C#                 |         22 |          0 |          4 |         26 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\src\Services\UserService.cs                                                | C#                 |         64 |          3 |         17 |         84 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\backend\src\Services\WorkLogService.cs                                             | C#                 |         65 |          4 |         14 |         83 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\README.md                                                                 | Markdown           |         60 |          0 |         14 |         74 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\eslint.config.js                                                          | JavaScript         |         22 |          0 |          2 |         24 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\index.html                                                                | HTML               |         13 |          0 |          1 |         14 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\package-lock.json                                                         | JSON               |      3,428 |          0 |          1 |      3,429 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\package.json                                                              | JSON               |         38 |          0 |          1 |         39 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\src\App.tsx                                                               | TypeScript JSX     |         57 |          0 |         10 |         67 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\src\components\Alert.tsx                                                  | TypeScript JSX     |         32 |          0 |          5 |         37 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\src\components\BarcodePreview.tsx                                         | TypeScript JSX     |         31 |          0 |          6 |         37 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\src\components\Button.tsx                                                 | TypeScript JSX     |         33 |          0 |          6 |         39 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\src\components\Input.tsx                                                  | TypeScript JSX     |         25 |          0 |          3 |         28 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\src\components\Modal.tsx                                                  | TypeScript JSX     |         41 |          4 |          6 |         51 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\src\components\NotificationContainer.tsx                                  | TypeScript JSX     |         19 |          0 |          3 |         22 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\src\components\Textarea.tsx                                               | TypeScript JSX     |         25 |          0 |          3 |         28 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\src\components\index.tsx                                                  | TypeScript JSX     |          8 |          0 |          1 |          9 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\src\components\sidebar.tsx                                                | TypeScript JSX     |         80 |          3 |          8 |         91 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\src\context\AuthContext.tsx                                               | TypeScript JSX     |         47 |          3 |          9 |         59 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\src\context\NotificationContext.tsx                                       | TypeScript JSX     |         30 |          1 |          9 |         40 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\src\hooks\index.ts                                                        | TypeScript         |          2 |          0 |          1 |          3 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\src\hooks\useAuth.ts                                                      | TypeScript         |         10 |          0 |          2 |         12 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\src\hooks\useNotification.ts                                              | TypeScript         |         15 |          0 |          3 |         18 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\src\index.css                                                             | PostCSS            |         38 |          0 |          3 |         41 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\src\main.tsx                                                              | TypeScript JSX     |         12 |          0 |          2 |         14 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\src\pages\AdminPanel.tsx                                                  | TypeScript JSX     |      1,395 |          0 |        111 |      1,506 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\src\pages\DashboardPage.tsx                                               | TypeScript JSX     |         86 |          0 |         11 |         97 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\src\pages\InventoryPage.tsx                                               | TypeScript JSX     |        302 |          0 |         30 |        332 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\src\pages\InventoryScannerPage.tsx                                        | TypeScript JSX     |        337 |          0 |         37 |        374 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\src\pages\LoginPage.tsx                                                   | TypeScript JSX     |         82 |          1 |          9 |         92 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\src\pages\WorkLoggingPage.tsx                                             | TypeScript JSX     |        182 |          0 |         25 |        207 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\src\pages\index.tsx                                                       | TypeScript JSX     |          6 |          0 |          1 |          7 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\src\services\adminService.ts                                              | TypeScript         |          8 |          0 |          2 |         10 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\src\services\api.ts                                                       | TypeScript         |          5 |          0 |          3 |          8 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\src\services\inventoryLogService.ts                                       | TypeScript         |         18 |          0 |          3 |         21 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\src\services\inventoryService.ts                                          | TypeScript         |         11 |          1 |          2 |         14 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\src\services\supplyListService.ts                                         | TypeScript         |          5 |          0 |          2 |          7 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\src\services\workLogService.ts                                            | TypeScript         |         12 |          0 |          3 |         15 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\src\types.ts                                                              | TypeScript         |        127 |          7 |         17 |        151 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\tailwind.config.js                                                        | JavaScript         |          6 |         31 |          1 |         38 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\tsconfig.app.json                                                         | JSON               |         21 |          2 |          3 |         26 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\tsconfig.json                                                             | JSON with Comments |          7 |          0 |          1 |          8 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\tsconfig.node.json                                                        | JSON               |         20 |          2 |          3 |         25 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\frontend\vite.config.ts                                                            | TypeScript         |          7 |          0 |          3 |         10 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\package-lock.json                                                                  | JSON               |      3,467 |          0 |          1 |      3,468 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\package.json                                                                       | JSON               |         44 |          0 |          3 |         47 |
+| c:\Users\Siedl\Programming\VS-Code\MartinInventory\public\main.js                                                                     | JavaScript         |         84 |         16 |         29 |        129 |
+| Total                                                                                                                                 |                    |     15,650 |        131 |        978 |     16,759 |
++---------------------------------------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
