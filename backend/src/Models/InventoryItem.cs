@@ -19,7 +19,7 @@ namespace Backend.Models
         public required string BatchNumber { get; set; }
         public required DateTime CreatedDate { get; set; }
         public string? Notes { get; set; }
-        public required int Barcode { get; set; }
+        public required string Barcode { get; set; }
         public required DateTime BestBefore { get; set; }
 
 
@@ -35,7 +35,7 @@ namespace Backend.Models
             DateTime lastUsed,
             DateTime createdDate,
             string batchNumber,
-            int barcode,
+            string barcode,
             DateTime bestBefore)
         {
             ItemName = itemName;

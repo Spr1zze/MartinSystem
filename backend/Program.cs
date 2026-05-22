@@ -10,26 +10,41 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins("http://localhost:5173")
+        policy.AllowAnyOrigin()
               .AllowAnyMethod()
               .AllowAnyHeader();
     });
 });
 
-// Use absolute path for database
-var dbPath = Path.Combine(AppContext.BaseDirectory, "inventory.db");
+var dbPath = Environment.GetEnvironmentVariable("INVENTORY_DB_PATH");
+
+if (string.IsNullOrEmpty(dbPath))
+{
+    // Default to local development database
+    dbPath = Path.Combine(AppContext.BaseDirectory, "inventory.db");
+}
+
 var connectionString = $"Data Source={dbPath}";
 
 builder.Services.AddDbContext<AppDbContext>(
     options => options.UseSqlite(connectionString)
 );
 
+
+// // Use absolute path for database
+// var dbPath = Path.Combine(AppContext.BaseDirectory, "inventory.db");
+// var connectionString = $"Data Source={dbPath}";
+
+// builder.Services.AddDbContext<AppDbContext>(
+//     options => options.UseSqlite(connectionString)
+// );
+
 builder.Services.AddScoped<AdminService>();
 builder.Services.AddScoped<InventoryItemService>();
 builder.Services.AddScoped<InventoryLogService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<WorkLogService>();
-builder.Services.AddScoped<SupplyListService>();
+builder.Services.AddScoped<ExtraListService>();
 builder.Services.AddControllers();
 
 var app = builder.Build();

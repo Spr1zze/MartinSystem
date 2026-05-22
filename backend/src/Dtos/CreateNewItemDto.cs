@@ -10,7 +10,7 @@ namespace Backend.Dtos
         public DateTime LastUsed { get; set; }
         public DateTime CreatedDate { get; set; }
         public string BatchNumber { get; set; }
-        public int Barcode { get; set; }
+        public string Barcode { get; set; }
         public DateTime BestBefore { get; set; }
     }
 }

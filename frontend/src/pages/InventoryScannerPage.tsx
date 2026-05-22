@@ -69,8 +69,8 @@ export const ScannerPage: React.FC = () => {
   };
 
   const processItemBarcode = async (rawValue: string) => {
-    const barcode = Number(rawValue.trim());
-    if (Number.isNaN(barcode)) {
+    const barcode = rawValue.trim();
+    if (barcode === '') {
       addNotification('error', 'Indtast en gyldig barkode');
       return;
     }
@@ -122,6 +122,11 @@ export const ScannerPage: React.FC = () => {
     setSelectedItem(null);
     setQuantityInput('1');
     setStep('itemScan');
+  };
+
+  const handleRemoveScannedItem = (indexToRemove: number) => {
+    setScannedItems(prev => prev.filter((_, index) => index !== indexToRemove));
+    addNotification('success', 'Vare fjernet fra checkout');
   };
 
   const resolveSignatureSigner = async () => {
@@ -325,10 +330,20 @@ export const ScannerPage: React.FC = () => {
               key={`${item.itemId}-${idx}`}
               className="bg-white rounded-md shadow-subtle p-4 md:p-6 border-l-4 border-success"
             >
-              <div>
+              <div className="flex items-start justify-between gap-4">
+                <div>
                 <p className="font-bold text-text-primary">{item.itemName}</p>
                 <p className="text-small text-text-secondary">Antal: {item.quantityTaken}</p>
                 <p className="text-small text-text-secondary">Barkode: {item.barcode}</p>
+                </div>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={() => handleRemoveScannedItem(idx)}
+                  disabled={loading}
+                >
+                  Slet
+                </Button>
               </div>
             </div>
           ))}

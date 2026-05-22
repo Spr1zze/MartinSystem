@@ -89,7 +89,7 @@ namespace backend.Migrations
                     BatchNumber = table.Column<string>(type: "TEXT", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Notes = table.Column<string>(type: "TEXT", nullable: true),
-                    Barcode = table.Column<int>(type: "INTEGER", nullable: false),
+                    Barcode = table.Column<string>(type: "TEXT", nullable: false),
                     BestBefore = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
@@ -265,3 +265,5 @@ namespace backend.Migrations
         }
     }
 }
+
+

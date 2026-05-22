@@ -1,9 +1,0 @@
-Invoke-WebRequest : The remote server returned an error: (500) Internal Server Error.
-At line:2 char:431
-+ ... ds 6; try { Invoke-WebRequest -Uri 'http://localhost:5001/api/Admin/s ...
-+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : InvalidOperation: (System.Net.HttpWebRequest:HttpWebRequest) [Invoke-WebRequest], WebExc 
-   eption
-    + FullyQualifiedErrorId : WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeWebRequestCommand
- 
-

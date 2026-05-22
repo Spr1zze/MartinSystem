@@ -5,11 +5,11 @@ using System.Reflection.Metadata.Ecma335;
 
 namespace Backend.Services
 {
-    public class SupplyListService
+    public class ExtraListService
     {
         private readonly AppDbContext _dbContext;
 
-        public SupplyListService (AppDbContext dbContext)
+        public ExtraListService (AppDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -20,6 +20,14 @@ namespace Backend.Services
             return await _dbContext.InventoryItems
                 .Where(i => i.Quantity <= i.MinQuantity)
                 .OrderBy(i => i.ItemName)
+                .ToListAsync();
+        }
+
+        public async Task<List<InventoryItem>> GetAllBestBeforeAsync()
+        {
+            DateTime currentTime = DateTime.UtcNow;
+            return await _dbContext.InventoryItems
+                .Where(i => i.BestBefore <= currentTime)
                 .ToListAsync();
         }
     }

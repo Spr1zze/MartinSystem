@@ -35,7 +35,7 @@ namespace Backend.Controllers
         }
 
         [HttpGet("validate-barcode/{scannedBarcode}")]
-        public async Task<IActionResult> ValidateBarcode(int scannedBarcode)
+        public async Task<IActionResult> ValidateBarcode(string scannedBarcode)
         {
             var item = await _inventoryLogService.ValidateBarcodeAsync(scannedBarcode);
             if (item == null) return NotFound();

@@ -76,7 +76,7 @@ export interface CheckoutItem {
   itemName: string;
   quantityTaken: number;
   availableStock: number;
-  barcode: number;
+  barcode: string;
 }
 
 export interface Checkout {
@@ -120,7 +120,7 @@ export interface ScannerInventoryItem {
   batchNumber: string;
   createdDate: string;
   notes?: string;
-  barcode: number;
+  barcode: string;
 }
 
 // Work Logs

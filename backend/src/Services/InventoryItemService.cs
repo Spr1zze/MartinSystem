@@ -36,7 +36,7 @@ namespace Backend.Services
             DateTime lastUsed,
             DateTime createdDate,
             string batchNumber,
-            int barcode,
+            string barcode,
             DateTime bestBefore
         )
         {

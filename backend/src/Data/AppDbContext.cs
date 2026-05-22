@@ -24,11 +24,11 @@ namespace Backend.Data
             
             // Seed Units
             modelBuilder.Entity<Unit>().HasData(
-                new Unit { Id = 1, Symbol = "Kg" },
-                new Unit { Id = 2, Symbol = "G" },
-                new Unit { Id = 3, Symbol = "Ml" },
-                new Unit { Id = 4, Symbol = "L" },
-                new Unit { Id = 5, Symbol = "Stk"}
+                new Unit { Id = 1, Symbol = "Kilogram" },
+                new Unit { Id = 2, Symbol = "Gram" },
+                new Unit { Id = 3, Symbol = "Milliliter" },
+                new Unit { Id = 4, Symbol = "Liter" },
+                new Unit { Id = 5, Symbol = "Stykker"}
             );
             
             // Seed ItemTypes
@@ -52,10 +52,10 @@ namespace Backend.Data
             // );
             
             // Seed Groups (if not already seeded)
-            modelBuilder.Entity<Group>().HasData(
-                new Group { Id = 1, GroupName = "Class A" },
-                new Group { Id = 2, GroupName = "Class B" }
-            );
+            // modelBuilder.Entity<Group>().HasData(
+            //     new Group { Id = 1, GroupName = "Class A" },
+            //     new Group { Id = 2, GroupName = "Class B" }
+            // );
         }
     }
 }

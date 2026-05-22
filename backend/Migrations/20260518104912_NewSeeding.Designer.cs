@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260507093007_InitialElectron")]
-    partial class InitialElectron
+    [Migration("20260518104912_NewSeeding")]
+    partial class NewSeeding
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,18 +33,6 @@ namespace backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Groups");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            GroupName = "Class A"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            GroupName = "Class B"
-                        });
                 });
 
             modelBuilder.Entity("Backend.Models.InventoryItem", b =>
@@ -206,27 +194,27 @@ namespace backend.Migrations
                         new
                         {
                             Id = 1,
-                            Symbol = "Kg"
+                            Symbol = "Kilogram"
                         },
                         new
                         {
                             Id = 2,
-                            Symbol = "G"
+                            Symbol = "Gram"
                         },
                         new
                         {
                             Id = 3,
-                            Symbol = "Ml"
+                            Symbol = "Milliliter"
                         },
                         new
                         {
                             Id = 4,
-                            Symbol = "L"
+                            Symbol = "Liter"
                         },
                         new
                         {
                             Id = 5,
-                            Symbol = "Stk"
+                            Symbol = "Stykker"
                         });
                 });
 

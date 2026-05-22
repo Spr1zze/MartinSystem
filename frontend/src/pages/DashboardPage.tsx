@@ -3,35 +3,72 @@ import type { InventoryItem, Unit } from '../types';
 import { supplyListService } from '../services/supplyListService';
 import { inventoryService } from '../services/inventoryService';
 
+type DashboardListType = 'shopping' | 'bestBefore';
+
 export const DashboardPage: React.FC = () => {
-  const [lowSupplyItems, setLowSupplyItems] = useState<InventoryItem[]>([]);
+  const [listType, setListType] = useState<DashboardListType>('shopping');
+  const [items, setItems] = useState<InventoryItem[]>([]);
   const [units, setUnits] = useState<Unit[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const loadDashboard = async () => {
+    const loadUnits = async () => {
+      try {
+        const unitsResponse = await inventoryService.getUnits();
+        setUnits(unitsResponse.data);
+      } catch (error) {
+        console.error('Failed to load dashboard units:', error);
+      }
+    };
+
+    void loadUnits();
+  }, []);
+
+  useEffect(() => {
+    const loadList = async () => {
       try {
         setLoading(true);
 
-        const [supplyResponse, unitsResponse] = await Promise.all([
-          supplyListService.getAll(),
-          inventoryService.getUnits(),
-        ]);
-
-        setLowSupplyItems(supplyResponse.data);
-        setUnits(unitsResponse.data);
+        if (listType === 'shopping') {
+          const response = await supplyListService.getAll();
+          setItems(response.data);
+        } else {
+          const response = await supplyListService.getExpiredBestBefore();
+          setItems(response.data);
+        }
       } catch (error) {
-        console.error('Failed to load dashboard data:', error);
+        console.error('Failed to load dashboard list data:', error);
+        setItems([]);
       } finally {
         setLoading(false);
       }
     };
 
-    void loadDashboard();
-  }, []);
+    void loadList();
+  }, [listType]);
 
   const getUnitSymbol = (unitId?: number) =>
     units.find(unit => unit.id === unitId)?.symbol || (unitId ? `Enhed ${unitId}` : 'N/A');
+
+  const getListTitle = () => (listType === 'shopping' ? 'Shopping list' : 'Best before list');
+
+  const getListDescription = () =>
+    listType === 'shopping'
+      ? 'Varer som er under eller paa minimumsniveau.'
+      : 'Varer hvor best before-datoen er overskredet.';
+
+  const getLoadingText = () =>
+    listType === 'shopping' ? 'Henter shopping list...' : 'Henter best before list...';
+
+  const getEmptyText = () =>
+    listType === 'shopping'
+      ? 'Ingen varer er paa lav lagerbeholdning.'
+      : 'Ingen varer har overskredet best before-datoen.';
+
+  const formatDate = (value?: string | Date) => {
+    if (!value) return 'N/A';
+    return new Date(value).toLocaleDateString();
+  };
 
   return (
     <div className="space-y-6">
@@ -52,16 +89,29 @@ export const DashboardPage: React.FC = () => {
         </section>
 
         <section className="bg-white rounded-md shadow-subtle p-4 md:p-6 space-y-4">
-          <div>
-            <h2 className="text-h2 text-text-primary">Lav lagerbeholdning</h2>
-            <p className="text-text-secondary">Varer som er under eller på minimumsniveau.</p>
+          <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div>
+              <h2 className="text-h2 text-text-primary">{getListTitle()}</h2>
+              <p className="text-text-secondary">{getListDescription()}</p>
+            </div>
+            <div className="w-full md:w-64">
+              <label className="block text-small font-semibold text-text-secondary mb-1">Vis liste</label>
+              <select
+                value={listType}
+                onChange={e => setListType(e.target.value as DashboardListType)}
+                className="w-full px-3 py-2 border-2 border-gray-300 rounded-xs focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent focus:ring-opacity-50 bg-white"
+              >
+                <option value="shopping">Shopping list</option>
+                <option value="bestBefore">Best before list</option>
+              </select>
+            </div>
           </div>
 
           {loading ? (
-            <p className="text-text-secondary">Henter supply list...</p>
-          ) : lowSupplyItems.length === 0 ? (
+            <p className="text-text-secondary">{getLoadingText()}</p>
+          ) : items.length === 0 ? (
             <div className="rounded-md border border-gray-200 bg-gray-50 p-4">
-              <p className="text-text-secondary">Ingen varer er på lav lagerbeholdning.</p>
+              <p className="text-text-secondary">{getEmptyText()}</p>
             </div>
           ) : (
             <div className="overflow-hidden rounded-md border border-gray-200">
@@ -69,20 +119,32 @@ export const DashboardPage: React.FC = () => {
                 <thead className="bg-gray-50">
                   <tr className="border-b border-gray-200">
                     <th className="px-4 py-3 text-left font-bold text-text-primary">Vare</th>
-                    <th className="px-4 py-3 text-left font-bold text-text-primary">Mængde</th>
-                    <th className="px-4 py-3 text-left font-bold text-text-primary">Min.</th>
+                    {listType === 'shopping' ? (
+                      <>
+                        <th className="px-4 py-3 text-left font-bold text-text-primary">Maengde</th>
+                        <th className="px-4 py-3 text-left font-bold text-text-primary">Min.</th>
+                      </>
+                    ) : (
+                      <th className="px-4 py-3 text-left font-bold text-text-primary">Best before</th>
+                    )}
                   </tr>
                 </thead>
                 <tbody>
-                  {lowSupplyItems.map(item => (
+                  {items.map(item => (
                     <tr key={item.id} className="border-b border-gray-100 last:border-b-0">
                       <td className="px-4 py-3 font-semibold text-text-primary">{item.itemName}</td>
-                      <td className="px-4 py-3 text-text-secondary">
-                        {item.quantity} {getUnitSymbol(item.unitId)}
-                      </td>
-                      <td className="px-4 py-3 text-text-secondary">
-                        {item.minQuantity} {getUnitSymbol(item.unitId)}
-                      </td>
+                      {listType === 'shopping' ? (
+                        <>
+                          <td className="px-4 py-3 text-text-secondary">
+                            {item.quantity} {getUnitSymbol(item.unitId)}
+                          </td>
+                          <td className="px-4 py-3 text-text-secondary">
+                            {item.minQuantity} {getUnitSymbol(item.unitId)}
+                          </td>
+                        </>
+                      ) : (
+                        <td className="px-4 py-3 text-text-secondary">{formatDate(item.bestBefore)}</td>
+                      )}
                     </tr>
                   ))}
                 </tbody>

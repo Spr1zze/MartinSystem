@@ -51,6 +51,15 @@ interface CreateStudentForm {
   groupId: string;
 }
 
+interface EditInventoryItemForm {
+  itemName: string;
+  batchNumber: string;
+  quantity: string;
+  unitId: string;
+  minQuantity: string;
+  bestBefore: string;
+}
+
 interface InventoryFilters {
   startDate: string;
   endDate: string;
@@ -100,6 +109,15 @@ const defaultCreateStudentForm: CreateStudentForm = {
   groupId: '',
 };
 
+const defaultEditInventoryItemForm: EditInventoryItemForm = {
+  itemName: '',
+  batchNumber: '',
+  quantity: '',
+  unitId: '',
+  minQuantity: '',
+  bestBefore: '',
+};
+
 const defaultFilters: InventoryFilters = {
   startDate: '',
   endDate: '',
@@ -120,6 +138,7 @@ export const AdminPanel: React.FC = () => {
   const [showAddStudentModal, setShowAddStudentModal] = useState(false);
   const [showAddInventoryItemModal, setShowAddInventoryItemModal] = useState(false);
   const [showInventoryFilterModal, setShowInventoryFilterModal] = useState(false);
+  const [showEditInventoryItemModal, setShowEditInventoryItemModal] = useState(false);
   const [inventoryItems, setInventoryItems] = useState<InventoryItem[]>([]);
   const [itemTypes, setItemTypes] = useState<ItemType[]>([]);
   const [units, setUnits] = useState<Unit[]>([]);
@@ -138,10 +157,12 @@ export const AdminPanel: React.FC = () => {
   const [workLogsEndpointReady, setWorkLogsEndpointReady] = useState(true);
   const [selectedInventoryLog, setSelectedInventoryLog] = useState<InventoryLog | null>(null);
   const [selectedInventoryItem, setSelectedInventoryItem] = useState<InventoryItem | null>(null);
+  const [editingInventoryItem, setEditingInventoryItem] = useState<InventoryItem | null>(null);
   const [selectedWorkLog, setSelectedWorkLog] = useState<WorkLog | null>(null);
   const [inventoryLoading, setInventoryLoading] = useState(false);
   const [creatingStudent, setCreatingStudent] = useState(false);
   const [creatingInventoryItem, setCreatingInventoryItem] = useState(false);
+  const [editingInventoryItemId, setEditingInventoryItemId] = useState<number | null>(null);
   const [deletingStudentId, setDeletingStudentId] = useState<number | null>(null);
   const [deletingInventoryLogId, setDeletingInventoryLogId] = useState<number | null>(null);
   const [deletingItemId, setDeletingItemId] = useState<number | null>(null);
@@ -151,6 +172,9 @@ export const AdminPanel: React.FC = () => {
   const [draftFilters, setDraftFilters] = useState<InventoryFilters>(defaultFilters);
   const [newInventoryItemForm, setNewInventoryItemForm] = useState<CreateInventoryItemForm>(
     defaultCreateInventoryItemForm
+  );
+  const [editInventoryItemForm, setEditInventoryItemForm] = useState<EditInventoryItemForm>(
+    defaultEditInventoryItemForm
   );
   const [newStudentForm, setNewStudentForm] = useState<CreateStudentForm>(defaultCreateStudentForm);
   const { addNotification } = useNotification();
@@ -387,6 +411,7 @@ export const AdminPanel: React.FC = () => {
       await inventoryService.delete(item.id);
       await fetchInventoryItems(activeFilters);
       setSelectedInventoryItem(currentItem => (currentItem?.id === item.id ? null : currentItem));
+      setEditingInventoryItem(currentItem => (currentItem?.id === item.id ? null : currentItem));
       addNotification('success', `${item.itemName} blev fjernet fra inventaret.`);
     } catch (error) {
       console.error('Failed to delete inventory item:', error);
@@ -405,6 +430,19 @@ export const AdminPanel: React.FC = () => {
   const handleOpenAddStudentModal = () => {
     setNewStudentForm(defaultCreateStudentForm);
     setShowAddStudentModal(true);
+  };
+
+  const handleOpenEditInventoryItemModal = (item: InventoryItem) => {
+    setEditingInventoryItem(item);
+    setEditInventoryItemForm({
+      itemName: item.itemName || '',
+      batchNumber: item.batchNumber || '',
+      quantity: String(item.quantity),
+      unitId: String(item.unitId),
+      minQuantity: String(item.minQuantity),
+      bestBefore: toDateInputValue(item.bestBefore),
+    });
+    setShowEditInventoryItemModal(true);
   };
 
   const handleOpenInventoryFilters = () => {
@@ -455,7 +493,7 @@ export const AdminPanel: React.FC = () => {
         createdDate: newInventoryItemForm.createdDate,
         bestBefore: newInventoryItemForm.bestBefore,
         batchNumber: newInventoryItemForm.batchNumber.trim(),
-        barcode: Number(newInventoryItemForm.barcode),
+        barcode: newInventoryItemForm.barcode.trim(),
       });
 
       setShowAddInventoryItemModal(false);
@@ -467,6 +505,50 @@ export const AdminPanel: React.FC = () => {
       addNotification('error', 'Varen kunne ikke oprettes.');
     } finally {
       setCreatingInventoryItem(false);
+    }
+  };
+
+  const handleEditInventoryItem = async () => {
+    if (!editingInventoryItem) {
+      return;
+    }
+
+    if (
+      editInventoryItemForm.itemName.trim() === '' ||
+      editInventoryItemForm.batchNumber.trim() === '' ||
+      editInventoryItemForm.quantity === '' ||
+      editInventoryItemForm.unitId === '' ||
+      editInventoryItemForm.minQuantity === '' ||
+      editInventoryItemForm.bestBefore === ''
+    ) {
+      addNotification('error', 'Udfyld alle felter for at redigere varen.');
+      return;
+    }
+
+    try {
+      setEditingInventoryItemId(editingInventoryItem.id);
+      const response = await inventoryService.edit(editingInventoryItem.id, {
+        itemName: editInventoryItemForm.itemName.trim(),
+        batchNumber: editInventoryItemForm.batchNumber.trim(),
+        quantity: Number(editInventoryItemForm.quantity),
+        unitId: Number(editInventoryItemForm.unitId),
+        minQuantity: Number(editInventoryItemForm.minQuantity),
+        bestBefore: editInventoryItemForm.bestBefore,
+      });
+
+      setShowEditInventoryItemModal(false);
+      setEditInventoryItemForm(defaultEditInventoryItemForm);
+      setEditingInventoryItem(response.data);
+      setSelectedInventoryItem(currentItem =>
+        currentItem?.id === response.data.id ? response.data : currentItem
+      );
+      await fetchInventoryItems(activeFilters);
+      addNotification('success', `${response.data.itemName} blev opdateret.`);
+    } catch (error) {
+      console.error('Failed to edit inventory item:', error);
+      addNotification('error', 'Varen kunne ikke opdateres.');
+    } finally {
+      setEditingInventoryItemId(null);
     }
   };
 
@@ -540,11 +622,6 @@ export const AdminPanel: React.FC = () => {
       return;
     }
 
-    if (!/^\d+$/.test(normalizedBarcode)) {
-      addNotification('error', 'Stregkoden skal kun indeholde tal.');
-      return;
-    }
-
     setGeneratedBarcodeValue(normalizedBarcode);
     addNotification('success', 'Barcode genereret.');
   };
@@ -561,9 +638,19 @@ export const AdminPanel: React.FC = () => {
   const getUnitSymbol = (unitId?: number) =>
     units.find(unit => unit.id === unitId)?.symbol || (unitId ? `Enhed ${unitId}` : 'N/A');
 
-  const filteredInventoryItems = inventoryItems.filter(item =>
-    item.itemName.toLowerCase().includes(inventorySearchQuery.toLowerCase())
-  );
+  const normalizedInventorySearchQuery = inventorySearchQuery.trim().toLowerCase();
+  const filteredInventoryItems = inventoryItems.filter(item => {
+    if (normalizedInventorySearchQuery === '') {
+      return true;
+    }
+
+    const normalizedItemName = item.itemName.toLowerCase();
+    const normalizedBarcode = item.barcode.toLowerCase();
+    return (
+      normalizedItemName.includes(normalizedInventorySearchQuery) ||
+      normalizedBarcode.includes(normalizedInventorySearchQuery)
+    );
+  });
   const filteredStudents = students.filter(student =>
     [
       student.userName,
@@ -571,8 +658,12 @@ export const AdminPanel: React.FC = () => {
       student.groupId != null ? String(student.groupId) : '',
     ].some(value => value.toLowerCase().includes(studentSearchQuery.toLowerCase()))
   );
-  const filteredInventoryLogs = inventoryLogs.filter(log => matchesLogFilters(log, inventoryLogFilters));
-  const filteredWorkLogs = workLogs.filter(log => matchesLogFilters(log, workLogFilters));
+  const filteredInventoryLogs = inventoryLogs.filter(log =>
+    matchesLogFilters(log, inventoryLogFilters, students)
+  );
+  const filteredWorkLogs = workLogs.filter(log =>
+    matchesLogFilters(log, workLogFilters, students)
+  );
 
   return (
     <div className="space-y-6">
@@ -775,17 +866,29 @@ export const AdminPanel: React.FC = () => {
                       </td>
                       <td className="px-4 py-3 text-text-secondary">{item.batchNumber || 'N/A'}</td>
                       <td className="px-4 py-3">
-                        <Button
-                          variant="danger"
-                          size="sm"
-                          disabled={deletingItemId === item.id}
-                          onClick={event => {
-                            event.stopPropagation();
-                            void handleDeleteInventoryItem(item);
-                          }}
-                        >
-                          {deletingItemId === item.id ? 'Fjerner...' : 'Fjern'}
-                        </Button>
+                        <div className="flex gap-2">
+                          <Button
+                            variant="secondary"
+                            size="sm"
+                            onClick={event => {
+                              event.stopPropagation();
+                              handleOpenEditInventoryItemModal(item);
+                            }}
+                          >
+                            Rediger
+                          </Button>
+                          <Button
+                            variant="danger"
+                            size="sm"
+                            disabled={deletingItemId === item.id}
+                            onClick={event => {
+                              event.stopPropagation();
+                              void handleDeleteInventoryItem(item);
+                            }}
+                          >
+                            {deletingItemId === item.id ? 'Fjerner...' : 'Fjern'}
+                          </Button>
+                        </div>
                       </td>
                     </tr>
                   ))}
@@ -1111,14 +1214,13 @@ export const AdminPanel: React.FC = () => {
               <label className="block text-xl font-semibold text-text-primary mb-2">Stregkode</label>
               <div className="grid grid-cols-1 gap-3 md:grid-cols-[1fr_auto] md:items-start">
                 <Input
-                  type="number"
-                  min="0"
+                  type="text"
                   value={newInventoryItemForm.barcode}
                   onChange={e => {
                     setGeneratedBarcodeValue(null);
                     setNewInventoryItemForm(current => ({ ...current, barcode: e.target.value }));
                   }}
-                  helperText="Indtast den numeriske værdi, og generer derefter barcoden."
+                  helperText="Indtast stregkode-værdien, og generer derefter barcoden."
                 />
                 <Button
                   type="button"
@@ -1153,6 +1255,95 @@ export const AdminPanel: React.FC = () => {
               disabled={creatingInventoryItem}
             >
               {creatingInventoryItem ? 'Opretter...' : 'Opret vare'}
+            </Button>
+          </div>
+        </div>
+      </Modal>
+
+      <Modal
+        isOpen={showEditInventoryItemModal}
+        onClose={() => {
+          setShowEditInventoryItemModal(false);
+          setEditingInventoryItem(null);
+        }}
+        title={editingInventoryItem ? `Rediger ${editingInventoryItem.itemName}` : 'Rediger vare'}
+      >
+        <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Input
+              label="Navn"
+              value={editInventoryItemForm.itemName}
+              onChange={event =>
+                setEditInventoryItemForm(current => ({ ...current, itemName: event.target.value }))
+              }
+            />
+            <Input
+              label="Batchnummer"
+              value={editInventoryItemForm.batchNumber}
+              onChange={event =>
+                setEditInventoryItemForm(current => ({ ...current, batchNumber: event.target.value }))
+              }
+            />
+            <Input
+              label="Mængde"
+              type="number"
+              min="0"
+              value={editInventoryItemForm.quantity}
+              onChange={event =>
+                setEditInventoryItemForm(current => ({ ...current, quantity: event.target.value }))
+              }
+            />
+            <Input
+              label="Minimum lager"
+              type="number"
+              min="0"
+              value={editInventoryItemForm.minQuantity}
+              onChange={event =>
+                setEditInventoryItemForm(current => ({ ...current, minQuantity: event.target.value }))
+              }
+            />
+            <div className="w-full">
+              <label className="block text-xl font-semibold text-text-primary mb-2">Enhed</label>
+              <select
+                value={editInventoryItemForm.unitId}
+                onChange={event =>
+                  setEditInventoryItemForm(current => ({ ...current, unitId: event.target.value }))
+                }
+                className="w-full px-3 py-3 border-2 border-gray-300 rounded-xs focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent focus:ring-opacity-50 text-lg bg-white"
+              >
+                <option value="">Vælg enhed</option>
+                {units.map(unit => (
+                  <option key={unit.id} value={unit.id}>
+                    {unit.symbol}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <Input
+              label="Best Before"
+              type="date"
+              value={editInventoryItemForm.bestBefore}
+              onChange={event =>
+                setEditInventoryItemForm(current => ({ ...current, bestBefore: event.target.value }))
+              }
+            />
+          </div>
+          <div className="flex flex-col gap-3 md:flex-row md:justify-end">
+            <Button
+              variant="secondary"
+              onClick={() => {
+                setShowEditInventoryItemModal(false);
+                setEditingInventoryItem(null);
+              }}
+              disabled={editingInventoryItemId === editingInventoryItem?.id}
+            >
+              Annuller
+            </Button>
+            <Button
+              onClick={handleEditInventoryItem}
+              disabled={editingInventoryItemId === editingInventoryItem?.id}
+            >
+              {editingInventoryItemId === editingInventoryItem?.id ? 'Gemmer...' : 'Gem ændringer'}
             </Button>
           </div>
         </div>
@@ -1364,6 +1555,11 @@ const formatDateTime = (value?: string) => {
   return new Date(value).toLocaleString();
 };
 
+const toDateInputValue = (value?: string | Date) => {
+  if (!value) return '';
+  return new Date(value).toISOString().slice(0, 10);
+};
+
 const getLogUserName = (log: InventoryLog | WorkLog, students: AdminStudent[] = []) =>
   log.userName ||
   log.user?.userName ||
@@ -1374,7 +1570,11 @@ const getLogUserName = (log: InventoryLog | WorkLog, students: AdminStudent[] = 
 const getInventoryItemName = (log: InventoryLog) =>
   log.inventoryItemName || `Vare #${log.inventoryItemId}`;
 
-const matchesLogFilters = (log: InventoryLog | WorkLog, filters: LogFilters) => {
+const matchesLogFilters = (
+  log: InventoryLog | WorkLog,
+  filters: LogFilters,
+  students: AdminStudent[] = []
+) => {
   const logDate = new Date(log.timestamp);
   const startDate = filters.startDate ? new Date(filters.startDate) : null;
   const endDate = filters.endDate ? new Date(`${filters.endDate}T23:59:59`) : null;
@@ -1393,7 +1593,7 @@ const matchesLogFilters = (log: InventoryLog | WorkLog, filters: LogFilters) => 
     return true;
   }
 
-  return getLogUserName(log).toLowerCase().includes(normalizedSearchTerm);
+  return getLogUserName(log, students).toLowerCase().includes(normalizedSearchTerm);
 };
 
 const toSearchParams = (filters: InventoryFilters): InventorySearchParams => ({

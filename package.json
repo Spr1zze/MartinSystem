@@ -6,16 +6,16 @@
   "main": "public/main.js",
   "homepage": "./",
   "devDependencies": {
+    "concurrently": "^8.2.0",
     "electron": "^42.0.0",
     "electron-builder": "^26.8.1",
-    "concurrently": "^8.2.0",
     "electron-is-dev": "^2.0.0"
   },
   "scripts": {
     "start": "electron .",
     "dev": "concurrently \"cd frontend && npm run dev\" \"electron .\"",
     "dev-browser": "concurrently \"cd backend && dotnet run\" \"cd frontend && npm run dev\"",
-    "build-backend": "cd backend && dotnet publish -c Release",
+    "build-backend": "cd backend && dotnet publish -c Release -r win-x64 --self-contained",
     "build-frontend": "cd frontend && npm run build",
     "build": "npm run build-backend && npm run build-frontend",
     "electron-build": "npm run build && electron-builder"
@@ -23,12 +23,22 @@
   "build": {
     "appId": "com.martinInventory",
     "files": [
-      "public/main.js",
-      "frontend/dist/**/*",
-      "backend/bin/Release/net8.0/**/*"
+      "public/main.js"
+    ],
+    "extraResources": [
+      {
+        "from": "backend/bin/Release/net10.0/win-x64/publish",
+        "to": "backend/bin/Release/net10.0/win-x64/publish"
+      },
+      {
+        "from": "frontend/dist",
+        "to": "frontend/dist"
+      }
     ],
     "win": {
-      "target": ["nsis"]
+      "target": [
+        "nsis"
+      ]
     }
   }
 }

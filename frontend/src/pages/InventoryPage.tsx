@@ -101,9 +101,19 @@ export const InventoryPage: React.FC = () => {
   const activeTypeName =
     itemTypes.find(itemType => itemType.id === Number(activeFilters.typeId))?.type || '';
 
-  const filteredItems = items.filter(item =>
-    item.itemName.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const normalizedSearchQuery = searchQuery.trim().toLowerCase();
+  const filteredItems = items.filter(item => {
+    if (normalizedSearchQuery === '') {
+      return true;
+    }
+
+    const normalizedItemName = item.itemName.toLowerCase();
+    const normalizedBarcode = item.barcode.toLowerCase();
+    return (
+      normalizedItemName.includes(normalizedSearchQuery) ||
+      normalizedBarcode.includes(normalizedSearchQuery)
+    );
+  });
 
   const getUnitSymbol = (unitId?: number) =>
     units.find(unit => unit.id === unitId)?.symbol || (unitId ? `Enhed ${unitId}` : 'N/A');
@@ -170,7 +180,7 @@ export const InventoryPage: React.FC = () => {
                 <th className="px-4 py-3 text-left font-bold text-text-primary">Mængde</th>
                 <th className="px-4 py-3 text-left font-bold text-text-primary">Enhed</th>
                 <th className="px-4 py-3 text-left font-bold text-text-primary">Min. tærskel</th>
-                <th className="px-4 py-3 text-left font-bold text-text-primary">Sidst brugt</th>
+                <th className="px-4 py-3 text-left font-bold text-text-primary">Bedst før</th>
               </tr>
             </thead>
             <tbody>
@@ -192,7 +202,7 @@ export const InventoryPage: React.FC = () => {
                   </td>
                   <td className="px-4 py-3 text-text-secondary">{getUnitSymbol(item.unitId)}</td>
                   <td className="px-4 py-3 text-text-secondary">{item.minQuantity}</td>
-                  <td className="px-4 py-3 text-text-secondary">{formatDate(item.lastUsed)}</td>
+                  <td className="px-4 py-3 text-text-secondary">{formatDate(item.bestBefore)}</td>
                 </tr>
               ))}
             </tbody>

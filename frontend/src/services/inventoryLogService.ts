@@ -12,7 +12,7 @@ export const inventoryLogService = {
   getAll: () => apiClient.get<InventoryLog[]>('/inventorylog'),
   validateStudent: (studentId: number) =>
     apiClient.get<ScannerStudent>(`/inventorylog/validate-student/${studentId}`),
-  validateBarcode: (barcode: number) =>
+  validateBarcode: (barcode: string) =>
     apiClient.get<ScannerInventoryItem>(`/inventorylog/validate-barcode/${barcode}`),
   createCheckout: (data: CreateCheckoutRequest) =>
     apiClient.post('/inventorylog/create-checkout', data),

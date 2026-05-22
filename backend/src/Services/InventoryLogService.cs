@@ -80,7 +80,7 @@ namespace Backend.Services
 
         // Call this when item barcode is scanned for inv log
         // aka step 2 in inv logging
-        public async Task<InventoryItem> ValidateBarcodeAsync(int scannedBarcode)
+        public async Task<InventoryItem> ValidateBarcodeAsync(string scannedBarcode)
         {
             var item = await _context.InventoryItems
                 .FirstOrDefaultAsync(i => i.Barcode == scannedBarcode);
